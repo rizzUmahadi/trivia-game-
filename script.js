@@ -36,3 +36,77 @@ questionCard.classList.add("answered")
 
 questionCard.classList.remove("answered")
 // Back to normal
+
+const questions = [
+  {
+    text: "Which field studies how humans think, learn, and solve problems?",
+    answers: [
+      "Cognitive Science",
+      "Data Science",
+      "Cybersecurity",
+      "Software Engineering"
+    ],
+    correct: 0
+  },
+
+  {
+    text: "What does AI stand for?",
+    answers: [
+      "Automated Intelligence",
+      "Artificial Intelligence",
+      "Advanced Internet",
+      "Automatic Information"
+    ],
+    correct: 1
+  },
+
+  {
+    text: "Which part of the brain is primarily responsible for decision-making and planning?",
+    answers: [
+      "Cerebellum",
+      "Brain Stem",
+      "Frontal Lobe",
+      "Occipital Lobe"
+    ],
+    correct: 2
+  },
+
+  {
+    text: "Which of the following is an example of machine learning?",
+    answers: [
+      "A calculator performing arithmetic",
+      "A search engine recommending videos based on your history",
+      "A keyboard displaying typed letters",
+      "A monitor displaying images"
+    ],
+    correct: 1
+  },
+
+  {
+    text: "Who is often called the 'father of Artificial Intelligence'?",
+    answers: [
+      "Alan Turing",
+      "John McCarthy",
+      "Sigmund Freud",
+      "Elon Musk"
+    ],
+    correct: 1
+  }
+];
+let currentIndex = 0
+let score = 0
+function loadQuestion(index) {
+  const currentQuestion = questions[index];
+  questionNumber.textContent = `Question ${index + 1} of ${questions.length}`;
+  questionText.textContent = currentQuestion.text;
+  answerBtnsNodeList.forEach((button, answerIndex) => {
+    button.textContent = currentQuestion.answers[answerIndex];
+    button.className = "answer-btn";
+    
+  });
+  nextBtn.classList.add("hidden");
+  questionCard.classList.remove("answered");
+  
+
+}
+loadQuestion(0);
