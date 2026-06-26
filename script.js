@@ -147,6 +147,15 @@ answerList.addEventListener("click", (event) => {
   nextBtn.classList.remove("hidden");
 
 });
+nextBtn.addEventListener("click", () => {
+  currentIndex++;
+
+  if (currentIndex < questions.length) {
+    loadQuestion(currentIndex);
+  } else {
+    showEndScreen();
+  }
+});
 
   
 
