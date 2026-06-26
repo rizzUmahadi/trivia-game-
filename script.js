@@ -156,7 +156,47 @@ nextBtn.addEventListener("click", () => {
     showEndScreen();
   }
 });
+function showEndScreen() {
+  questionCard.classList.add("hidden");
+  endScreen.classList.remove("hidden");
 
+  const title = document.createElement("h2");
+  title.textContent = `You scored ${score} out of ${questions.length}`;
+
+  const message = document.createElement("p");
+
+  if (score === questions.length) {
+    message.textContent = "Perfect score! Excellent work!";
+  } else if (score >= questions.length / 2) {
+    message.textContent = "Good job! You passed.";
+  } else {
+    message.textContent = "Keep practicing. You can improve!";
+  }
+
+  const restartButton = document.createElement("button");
+  restartButton.id = "restart-btn";
+  restartButton.textContent = "Play Again";
+
+  endScreen.appendChild(title);
+  endScreen.appendChild(message);
+  endScreen.appendChild(restartButton);
+}
+endScreen.addEventListener("click", (event) => {
+  if (event.target.id !== "restart-btn") {
+    return;
+  }
+
+  score = 0;
+  currentIndex = 0;
+  scoreDisplay.textContent = score;
+
+  endScreen.innerHTML = "";
+  endScreen.classList.add("hidden");
+
+  questionCard.classList.remove("hidden");
+
+  loadQuestion(0);
+});
   
 
 
