@@ -1,256 +1,30 @@
-/* ─── Reset & Base ─────────────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-:root {
-  --bg: #0f0f1a;
-  --surface: #1a1a2e;
-  --surface-2: #16213e;
-  --accent: #e94560;
-  --accent-glow: rgba(233, 69, 96, 0.35);
-  --text: #eaeaea;
-  --text-muted: #8888aa;
-  --border: #2a2a4a;
-  --correct: #4caf50;
-  --wrong: #e53935;
-  --font-display: 'Courier New', Courier, monospace;
-  --font-body: system-ui, -apple-system, sans-serif;
-  --radius: 10px;
-}
-
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px 16px;
-}
-
-/* ─── Game Wrapper ─────────────────────────────────────────────────── */
-#game {
-  width: 100%;
-  max-width: 640px;
-}
-
-/* ─── Header ────────────────────────────────────────────────────────── */
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 28px;
-}
-
-#game-title {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--accent);
-  text-shadow: 0 0 12px var(--accent-glow);
-}
-
-#score-display {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  letter-spacing: 0.04em;
-}
-
-#score-display #score {
-  color: var(--text);
-  font-weight: bold;
-}
-
-/* ─── Question Card ─────────────────────────────────────────────────── */
-#question-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 36px 32px 28px;
-  box-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255,255,255,0.03) inset;
-  transition: border-left 0.2s ease;
-}
-
-#question-number {
-  font-family: var(--font-display);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--accent);
-  margin-bottom: 14px;
-}
-
-#question-text {
-  font-size: 1.35rem;
-  font-weight: 600;
-  line-height: 1.45;
-  color: var(--text);
-  margin-bottom: 28px;
-}
-
-/* ─── Answer List ───────────────────────────────────────────────────── */
-#answer-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 24px;
-}
-
-.answer-btn {
-  width: 100%;
-  padding: 14px 18px;
-  background: var(--surface-2);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  text-align: left;
-  cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
-  line-height: 1.4;
-}
-
-.answer-btn:hover {
-  background: #222240;
-  border-color: var(--accent);
-  transform: translateX(3px);
-}
-
-.answer-btn:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-/* ─── State Classes (required by workshop) ─────────────────────────── */
+/* Applied to the button the player clicked — correct answer */
 .correct {
-  background-color: #4caf50 !important;
-  color: white !important;
-  border-color: #388e3c !important;
+  background-color: #4caf50;
+  color: white;
+  border-color: #388e3c;
 }
 
+/* Applied to the button the player clicked — wrong answer */
 .wrong {
-  background-color: #e53935 !important;
-  color: white !important;
-  border-color: #c62828 !important;
+  background-color: #e53935;
+  color: white;
+  border-color: #c62828;
 }
 
+/* Applied to all answer buttons after a choice is made */
 .disabled {
   opacity: 0.5;
   pointer-events: none;
   cursor: default;
 }
 
+/* Applied to #question-card after an answer is locked in */
 .answered {
-  border-left: 4px solid var(--accent);
+  border-left: 4px solid #90a4ae;
 }
 
+/* Hides an element — used on next-btn and end-screen initially */
 .hidden {
   display: none;
-}
-
-/* ─── Next Button ───────────────────────────────────────────────────── */
-#next-btn {
-  display: block;
-  margin-left: auto;
-  padding: 12px 24px;
-  background: var(--accent);
-  color: white;
-  border: none;
-  border-radius: var(--radius);
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  letter-spacing: 0.02em;
-  transition: opacity 0.15s ease, transform 0.1s ease;
-  box-shadow: 0 0 16px var(--accent-glow);
-}
-
-#next-btn:hover {
-  opacity: 0.88;
-  transform: translateY(-1px);
-}
-
-#next-btn:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-/* ─── End Screen ────────────────────────────────────────────────────── */
-#end-screen {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 52px 32px 44px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
-  text-align: center;
-  animation: fadeIn 0.35s ease;
-}
-
-#end-screen h2 {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  color: var(--text);
-  margin-bottom: 14px;
-  text-shadow: 0 0 20px var(--accent-glow);
-}
-
-#end-screen p {
-  font-size: 1.05rem;
-  color: var(--text-muted);
-  margin-bottom: 32px;
-  line-height: 1.5;
-}
-
-#restart-btn {
-  padding: 13px 32px;
-  background: var(--accent);
-  color: white;
-  border: none;
-  border-radius: var(--radius);
-  font-family: var(--font-body);
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  letter-spacing: 0.03em;
-  transition: opacity 0.15s ease, transform 0.1s ease;
-  box-shadow: 0 0 20px var(--accent-glow);
-}
-
-#restart-btn:hover {
-  opacity: 0.88;
-  transform: translateY(-1px);
-}
-
-/* ─── Animations ────────────────────────────────────────────────────── */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ─── Responsive ────────────────────────────────────────────────────── */
-@media (max-width: 480px) {
-  #question-card {
-    padding: 24px 18px 20px;
-  }
-
-  #question-text {
-    font-size: 1.1rem;
-  }
-
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-  }
 }
