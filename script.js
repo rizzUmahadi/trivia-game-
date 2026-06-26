@@ -110,3 +110,54 @@ function loadQuestion(index) {
 
 }
 loadQuestion(0);
+answerList.addEventListener("click", (event) => {
+  // 1. If the click was not on a BUTTON element, return early and do nothing
+  //    hint: check event.target.tagName — it will be the string "BUTTON" if a button was clicked
+  if (event.target.tagName !== "BUTTON") {
+    return;
+  }
+  const clickedButton = event.target;
+
+
+  // 2. Store the clicked button and figure out which index it is in the list
+  //    hint: convert answerBtnsNodeList to an array and use .indexOf(event.target)
+  const btnArray = Array.from(answerBtnsNodeList);
+  const clickedIndex = btnArray.indexOf(clickedButton);
+  const correctIndex = questions[currentIndex].correct;
+  if (clickedIndex === correctIndex) {
+    clickedButton.classList.add("correct");
+    score++;
+    scoreDisplay.textContent = score;
+
+} else {
+  clickedButton.classList.add("wrong");
+  answerBtnsNodeList[correctIndex].classList.add("correct");
+}
+
+
+
+
+
+
+  // 3. Get the correct answer index from the current question in the data array
+  answerBtnsNodeList.forEach(button => {
+    button.classList.add("disabled");
+  });
+  questionCard.classList.add("answered");
+  nextBtn.classList.remove("hidden");
+
+});
+
+  
+
+
+  // 4. Compare: did the player pick the right one?
+  //    - If correct: add the "correct" class to the clicked button, increment score,
+  //      and update scoreDisplay.textContent
+  //    - If wrong: add the "wrong" class to the clicked button,
+  //      and add "correct" to the button at the correct index to reveal it
+
+  // 5. Disable all four answer buttons so the player can't change their answer
+  //    hint: convert to a real array and use forEach to add "disabled" to each
+
+  // 6. Add "answered" to questionCard and remove "hidden" from nextBtn
